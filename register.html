@@ -23,6 +23,7 @@
             text-align: center;
         }
         h2 {
+            text-align: center;
             color: #6a0dad; /* Purple color for the heading */
         }
         .form-group {
@@ -50,29 +51,37 @@
             width: 100%;
         }
         input[type="submit"]:hover {
-            background-color: #4e0a7c; /* Darker purple on hover */
+            background-color: #5e0aad;
+        }
+        .message {
+            margin-top: 15px;
+            color: green;
         }
     </style>
 </head>
 <body>
     <div class="register-container">
-        <h2>Register</h2>
-        <form action="#" method="POST">
+        <h2>Create an Account</h2>
+        <form id="registerForm">
             <div class="form-group">
-                <label for="username">Username</label>
+                <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
             </div>
             <div class="form-group">
-                <label for="password">Password</label>
+                <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            <div class="form-group">
-                <label for="confirm-password">Confirm Password</label>
-                <input type="password" id="confirm-password" name="confirm-password" required>
-            </div>
             <input type="submit" value="Register">
+            <div class="message" id="successMessage"></div>
         </form>
-        <p><a href="login.html">Already have an account? Login here.</a></p>
     </div>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+            document.getElementById('successMessage').textContent = 'Registration successful!';
+            document.getElementById('registerForm').reset(); // Clear the form fields
+        });
+    </script>
 </body>
 </html>
