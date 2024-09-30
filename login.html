@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #6a0dad; /* Purple background */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -20,9 +20,14 @@
             border-radius: 5px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             width: 300px;
+            text-align: center; /* Center text for the image */
         }
         h2 {
-            text-align: center;
+            color: #6a0dad; /* Purple color for the heading */
+        }
+        img {
+            max-width: 100%; /* Responsive image */
+            border-radius: 5px; /* Rounded corners for the image */
         }
         .form-group {
             margin-bottom: 15px;
@@ -30,6 +35,7 @@
         label {
             display: block;
             margin-bottom: 5px;
+            color: #6a0dad; /* Purple color for the label */
         }
         input[type="text"],
         input[type="password"] {
@@ -39,7 +45,7 @@
             border-radius: 4px;
         }
         input[type="submit"] {
-            background-color: #007bff;
+            background-color: #6a0dad; /* Purple color for the button */
             color: white;
             border: none;
             padding: 10px;
@@ -48,36 +54,26 @@
             width: 100%;
         }
         input[type="submit"]:hover {
-            background-color: #0056b3;
+            background-color: #4e0a7c; /* Darker purple on hover */
         }
     </style>
 </head>
 <body>
     <div class="login-container">
         <h2>Login</h2>
-        <form id="loginForm">
+        <img src="https://via.placeholder.com/150" alt="Placeholder Image"> <!-- Replace with your image URL -->
+        <form action="#" method="POST">
             <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" id="username" required>
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
             </div>
             <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" required>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
             </div>
             <input type="submit" value="Login">
         </form>
-        <p style="text-align: center;">Don't have an account? <a href="register.html">Register here</a></p>
+        <p><a href="register.html">Don't have an account? Register here.</a></p>
     </div>
-
-    <script>
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the form from submitting normally
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            alert(`Logged in as ${username}`);
-            // Here you would typically validate the credentials
-        });
-    </script>
 </body>
 </html>
-
