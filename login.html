@@ -3,67 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Purpose</title>
+    <title>Login Form</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
             background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
         }
-        header {
-            background: #007bff;
-            color: white;
-            padding: 1rem;
-            text-align: center;
-        }
-        section {
-            padding: 20px;
-            margin: 10px;
+        .login-container {
             background: white;
+            padding: 20px;
             border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
         }
-        footer {
+        h2 {
             text-align: center;
-            padding: 1rem;
-            background: #007bff;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
             color: white;
-            position: relative;
-            bottom: 0;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
             width: 100%;
         }
-        a {
-            color: #007bff;
-            text-decoration: none;
-            display: block;
-            margin-top: 20px;
-            text-align: center;
-        }
-        a:hover {
-            text-decoration: underline;
+        input[type="submit"]:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Welcome to Our Website</h1>
-        <p>Learn more about our purpose and mission.</p>
-    </header>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" required>
+            </div>
+            <input type="submit" value="Login">
+        </form>
+        <p style="text-align: center;">Don't have an account? <a href="register.html">Register here</a></p>
+    </div>
 
-    <section>
-        <h2>Our Purpose</h2>
-        <p>
-            At [Your Organization Name], we strive to [briefly explain your mission]. 
-            Our goal is to [describe what you aim to achieve]. 
-            We believe in [mention core values or principles that guide your work].
-        </p>
-        <a href="login.html">Go to Login</a>
-    </section>
-
-    <footer>
-        <p>&copy; 2024 [Your Organization Name]. All rights reserved.</p>
-    </footer>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the form from submitting normally
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            alert(`Logged in as ${username}`);
+            // Here you would typically validate the credentials
+        });
+    </script>
 </body>
 </html>
 
