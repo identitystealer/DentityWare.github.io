@@ -61,67 +61,191 @@
         button:hover {
             background-color: #218838;
         }
+        .hidden {
+            display: none;
+        }
         .message {
             color: red;
-            margin-top: 10px;
+        }
+        .seller-section {
+            margin-top: 20px;
+        }
+        .product-list {
+            margin-top: 20px;
+            width: 100%;
+        }
+        .product {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            background-color: #fff;
+        }
+        .messages {
+            margin-top: 20px;
+            width: 100%;
+        }
+        .message-item {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            background-color: #e9ecef;
         }
     </style>
-    <script>
-        // Simulated database
-        const users = [
-            { username: 'user1', email: 'user1@example.com' },
-            { username: 'user2', email: 'user2@example.com' }
-        ];
-
-        function registerUser() {
-            const usernameInput = document.getElementById('registerUsername').value;
-            const emailInput = document.getElementById('registerEmail').value;
-            const messageDiv = document.getElementById('registerMessage');
-
-            // Check if the username or email is taken
-            const isUsernameTaken = users.some(user => user.username === usernameInput);
-            const isEmailTaken = users.some(user => user.email === emailInput);
-
-            if (isUsernameTaken) {
-                messageDiv.textContent = 'Username is already taken.';
-                return;
-            }
-            if (isEmailTaken) {
-                messageDiv.textContent = 'Email is already taken.';
-                return;
-            }
-
-            // If not taken, simulate registration
-            users.push({ username: usernameInput, email: emailInput });
-            messageDiv.textContent = 'Registration successful!';
-            messageDiv.style.color = 'green';
-            // Clear input fields
-            document.getElementById('registerUsername').value = '';
-            document.getElementById('registerEmail').value = '';
-        }
-    </script>
 </head>
 <body>
     <h1>My Professional Educational Store</h1>
+    
     <nav>
-        <button onclick="document.getElementById('registerForm').style.display = 'block';">Register</button>
-        <button onclick="document.getElementById('loginForm').style.display = 'block';">Login</button>
-        <button onclick="window.open('https://forms.gle/your-google-form-link', '_blank');">Apply for Seller</button>
+        <button onclick="showRegister()">Register</button>
+        <button onclick="showLogin()">Login</button>
+        <button onclick="showSellerSection()">Seller Section</button>
     </nav>
 
-    <form id="registerForm" style="display:none;">
+    <div id="registerForm" class="hidden">
         <h2>Register</h2>
-        <input type="text" id="registerUsername" placeholder="Username" required>
-        <input type="email" id="registerEmail" placeholder="Email" required>
-        <button type="button" onclick="registerUser()">Register</button>
+        <form onsubmit="return registerUser(event)">
+            <input type="text" id="registerUsername" placeholder="Username" required>
+            <input type="email" id="registerEmail" placeholder="Email" required>
+            <input type="password" id="registerPassword" placeholder="Password" required>
+            <button type="submit">Register</button>
+        </form>
         <div id="registerMessage" class="message"></div>
-    </form>
+    </div>
 
-    <form id="loginForm" style="display:none;">
+    <div id="loginForm" class="hidden">
         <h2>Login</h2>
-        <input type="text" placeholder="Username" required>
-        <input type="password" placeholder="Password" required>
-        <button type="submit">Login</button>
-    </form>
+        <form onsubmit="return loginUser(event)">
+            <input type="text" id="loginUsername" placeholder="Username" required>
+            <input type="password" id="loginPassword" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <div id="sellerSection" class="hidden seller-section">
+        <h2>Seller Section</h2>
+        <form onsubmit="return addProduct(event)">
+            <input type="text" id="productName" placeholder="Product Name" required>
+            <input type="text" id="productDescription" placeholder="Product Description" required>
+            <button type="submit">Add Product</button>
+        </form>
+        
+        <div class="product-list" id="productList"></div>
+
+        <h2>Edit Profile</h2>
+        <form onsubmit="return editProfile(event)">
+            <input type="text" id="editBio" placeholder="Edit Bio" required>
+            <input type="file" id="editPfp" accept="image/*">
+            <button type="submit">Update Profile</button>
+        </form>
+
+        <h2>Messaging System</h2>
+        <form onsubmit="return sendMessage(event)">
+            <input type="text" id="messageInput" placeholder="Type a message..." required>
+            <button type="submit">Send Message</button>
+        </form>
+        <div class="messages" id="messageList"></div>
+    </div>
+
+    <script>
+        const takenUsernames = ["user1", "user2"];
+        const takenEmails = ["example@example.com", "test@test.com"];
+        let products = [];
+        let messages = [];
+
+        function showRegister() {
+            hideAll();
+            document.getElementById("registerForm").classList.remove("hidden");
+        }
+
+        function showLogin() {
+            hideAll();
+            document.getElementById("loginForm").classList.remove("hidden");
+        }
+
+        function showSellerSection() {
+            hideAll();
+            document.getElementById("sellerSection").classList.remove("hidden");
+        }
+
+        function hideAll() {
+            document.getElementById("registerForm").classList.add("hidden");
+            document.getElementById("loginForm").classList.add("hidden");
+            document.getElementById("sellerSection").classList.add("hidden");
+            document.getElementById("registerMessage").textContent = '';
+        }
+
+        function registerUser(event) {
+            event.preventDefault();
+            const username = document.getElementById("registerUsername").value;
+            const email = document.getElementById("registerEmail").value;
+
+            if (takenUsernames.includes(username)) {
+                document.getElementById("registerMessage").textContent = "Username is already taken.";
+                return false;
+            }
+
+            if (takenEmails.includes(email)) {
+                document.getElementById("registerMessage").textContent = "Email is already registered.";
+                return false;
+            }
+
+            // Simulate registration success
+            takenUsernames.push(username);
+            takenEmails.push(email);
+            document.getElementById("registerMessage").textContent = "Registration successful!";
+            return true;
+        }
+
+        function loginUser(event) {
+            event.preventDefault();
+            // Simulate login logic
+            alert("Login functionality not implemented yet.");
+            return false;
+        }
+
+        function addProduct(event) {
+            event.preventDefault();
+            const name = document.getElementById("productName").value;
+            const description = document.getElementById("productDescription").value;
+
+            products.push({ name, description });
+            document.getElementById("productList").innerHTML += `
+                <div class="product">
+                    <h3>${name}</h3>
+                    <p>${description}</p>
+                </div>
+            `;
+            document.getElementById("productName").value = '';
+            document.getElementById("productDescription").value = '';
+            return true;
+        }
+
+        function editProfile(event) {
+            event.preventDefault();
+            const bio = document.getElementById("editBio").value;
+            const pfp = document.getElementById("editPfp").files[0];
+
+            alert(`Profile updated with bio: ${bio}` + (pfp ? ` and profile picture: ${pfp.name}` : ''));
+            document.getElementById("editBio").value = '';
+            document.getElementById("editPfp").value = '';
+            return true;
+        }
+
+        function sendMessage(event) {
+            event.preventDefault();
+            const message = document.getElementById("messageInput").value;
+            messages.push(message);
+
+            document.getElementById("messageList").innerHTML += `
+                <div class="message-item">
+                    ${message}
+                </div>
+            `;
+            document.getElementById("messageInput").value = '';
+            return true;
+        }
+    </script>
 </body>
 </html>
