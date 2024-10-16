@@ -1,169 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Professional Educational Store</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        h1, h2 {
-            color: #333;
-        }
-        nav {
-            margin: 20px 0;
-        }
-        nav button {
-            margin: 0 10px;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-        nav button:hover {
-            background-color: #0056b3;
-        }
-        form {
-            background: #fff;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            width: 300px;
-            margin-bottom: 20px;
-        }
-        input {
-            display: block;
-            margin-bottom: 10px;
-            padding: 10px;
-            width: 100%;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-        }
-        button {
-            padding: 10px;
-            background-color: #28a745;
-            color: #fff;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-            width: 100%;
-        }
-        button:hover {
-            background-color: #218838;
-        }
-        .hidden {
-            display: none;
-        }
-        .message {
-            color: red;
-            margin-bottom: 10px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Italic Serif Word Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      background-color: #f0f0f0;
+    }
+
+    #container {
+      position: relative;
+      width: 80%;
+      height: 500px;
+      margin: 20px auto;
+      border: 2px solid #ccc;
+      background-color: white;
+      overflow: hidden;
+    }
+
+    .word {
+      position: absolute;
+      font-family: "Times New Roman", serif;
+      font-style: italic;
+      font-size: 24px;
+      background-color: yellow;
+      padding: 5px;
+      border-radius: 4px;
+    }
+
+    #userInput {
+      font-size: 18px;
+      padding: 10px;
+      width: 300px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      font-size: 18px;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
+  <h1>Italic Serif Word Generator</h1>
+  <p>Enter a word below and click "Generate" to display multiple highlighted italic words!</p>
 
-    <h1>Welcome to My Professional Educational Store</h1>
-    <h2>Register</h2>
+  <input type="text" id="userInput" placeholder="Enter a word">
+  <button onclick="generateWords()">Generate</button>
 
-    <form id="register-form">
-        <input type="text" id="username" placeholder="Username" required>
-        <input type="email" id="email" placeholder="Email" required>
-        <input type="password" id="password" placeholder="Password" required>
-        <button type="submit">Register</button>
-        <div class="message" id="register-message"></div>
-    </form>
+  <div id="container"></div>
 
-    <h2>Login</h2>
+  <script>
+    // Mapping of regular characters to italic serif Unicode equivalents
+    const charMap = {
+      'a': '𝑎', 'b': '𝑏', 'c': '𝑐', 'd': '𝑑', 'e': '𝑒', 'f': '𝑓', 'g': '𝑔', 'h': 'ℎ',
+      'i': '𝑖', 'j': '𝑗', 'k': '𝑘', 'l': '𝑙', 'm': '𝑚', 'n': '𝑛', 'o': '𝑜', 'p': '𝑝',
+      'q': '𝑞', 'r': '𝑟', 's': '𝑠', 't': '𝑡', 'u': '𝑢', 'v': '𝑣', 'w': '𝑤', 'x': '𝑥',
+      'y': '𝑦', 'z': '𝑧',
+      'A': '𝐴', 'B': '𝐵', 'C': '𝐶', 'D': '𝐷', 'E': '𝐸', 'F': '𝐹', 'G': '𝐺', 'H': '𝐻',
+      'I': '𝐼', 'J': '𝐽', 'K': '𝐾', 'L': '𝐿', 'M': '𝑀', 'N': '𝑁', 'O': '𝑂', 'P': '𝑃',
+      'Q': '𝑄', 'R': '𝑅', 'S': '𝑆', 'T': '𝑇', 'U': '𝑈', 'V': '𝑉', 'W': '𝑊', 'X': '𝑋',
+      'Y': '𝑌', 'Z': '𝑍'
+    };
 
-    <form id="login-form">
-        <input type="text" id="login-username" placeholder="Username" required>
-        <input type="password" id="login-password" placeholder="Password" required>
-        <button type="submit">Login</button>
-        <div class="message" id="login-message"></div>
-    </form>
+    function convertToSerifItalicUnicode(input) {
+      let italicText = '';
+      
+      for (let i = 0; i < input.length; i++) {
+        let char = input[i];
+        italicText += charMap[char] || char;
+      }
 
-    <h2>Seller Section</h2>
+      return italicText;
+    }
 
-    <nav>
-        <button onclick="showSection('add-product')">Add Product</button>
-        <button onclick="showSection('edit-profile')">Edit Profile</button>
-        <button onclick="showSection('messaging')">Messaging</button>
-    </nav>
+    function generateWords() {
+      let input = document.getElementById('userInput').value;
+      if (input.length > 2) {
+        let container = document.getElementById('container');
+        
+        // Create multiple words in random positions
+        for (let i = 0; i < 5; i++) {
+          let word = document.createElement('div');
+          word.classList.add('word');
+          word.textContent = convertToSerifItalicUnicode(input);
+          
+          // Random positioning within the container
+          let xPos = Math.random() * (container.offsetWidth - 100);
+          let yPos = Math.random() * (container.offsetHeight - 40);
 
-    <div id="add-product" class="hidden">
-        <h3>Add a Product</h3>
-        <form>
-            <input type="text" placeholder="Product Name" required>
-            <input type="number" placeholder="Price" required>
-            <textarea placeholder="Description" required></textarea>
-            <button type="submit">Add Product</button>
-        </form>
-    </div>
+          word.style.left = `${xPos}px`;
+          word.style.top = `${yPos}px`;
 
-    <div id="edit-profile" class="hidden">
-        <h3>Edit Profile</h3>
-        <form>
-            <input type="text" placeholder="Edit Bio" required>
-            <input type="file" accept="image/*" required>
-            <button type="submit">Save Changes</button>
-        </form>
-    </div>
-
-    <div id="messaging" class="hidden">
-        <h3>Messaging</h3>
-        <form id="message-form">
-            <input type="text" id="message" placeholder="Type your message" required>
-            <button type="submit">Send</button>
-        </form>
-        <div id="message-display"></div>
-    </div>
-
-    <script>
-        const takenUsernames = ['user1', 'user2'];
-        const takenEmails = ['test@example.com', 'sample@example.com'];
-
-        document.getElementById('register-form').addEventListener('submit', function (e) {
-            e.preventDefault();
-            const username = document.getElementById('username').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('register-message');
-
-            if (takenUsernames.includes(username)) {
-                message.textContent = 'Username is already taken.';
-            } else if (takenEmails.includes(email)) {
-                message.textContent = 'Email is already registered.';
-            } else {
-                message.textContent = 'Registration successful!';
-            }
-        });
-
-        function showSection(section) {
-            document.getElementById('add-product').classList.add('hidden');
-            document.getElementById('edit-profile').classList.add('hidden');
-            document.getElementById('messaging').classList.add('hidden');
-            document.getElementById(section).classList.remove('hidden');
+          container.appendChild(word);
         }
-
-        document.getElementById('message-form').addEventListener('submit', function (e) {
-            e.preventDefault();
-            const messageText = document.getElementById('message').value;
-            const messageDisplay = document.getElementById('message-display');
-            const newMessage = document.createElement('p');
-            newMessage.textContent = messageText;
-            messageDisplay.appendChild(newMessage);
-            document.getElementById('message').value = '';
-        });
-    </script>
-
+      }
+    }
+  </script>
 </body>
 </html>
